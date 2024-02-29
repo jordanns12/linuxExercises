@@ -24,6 +24,16 @@ if [ ! -f "$file" ]; then
     exit 1
 fi
 
+mean=$(cut -d ',' -f "$column" "$file" | tail -n +2 | {
+    sum=0
+    count=0
+    while read -r value; do
+        sum=$((sum + value))
+        count=$((count + 1))
+    done
+    if [ "$count" -gt 0 ]; then
+        echo "$((sum / count))"
+    fi
+})
 
-
-
+echo "Mean of column $column in file '$file': $mean"
