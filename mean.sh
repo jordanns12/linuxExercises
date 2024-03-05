@@ -18,12 +18,6 @@ fi
 column="$1"
 file="${2:-/dev/stdin}"
 
-# Check if the file exists
-if [ ! -f "$file" ]; then
-    echo "Error: File '$file' not found." 1>&2
-    exit 1
-fi
-
 mean=$(cut -d ',' -f "$column" "$file" | tail -n +2 | {
     sum=0
     count=0
