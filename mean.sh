@@ -22,12 +22,13 @@ mean=$(cut -d ',' -f "$column" "$file" | tail -n +2 | {
     sum=0
     count=0
     while read -r value; do
-        sum=$((sum + value))
+        sum=$(echo "$sum + $value" | bc)
         count=$((count + 1))
     done
     if [ "$count" -gt 0 ]; then
-        echo "$((sum / count))"
+        echo "scale=2; $sum / $count" | bc
     fi
 })
+
 
 echo "Mean of column $column in file '$file': $mean"
